@@ -1,4 +1,4 @@
-import 'package:calories_buddy/pages/home_page.dart';
+import 'package:calories_buddy/pages/exercise_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -21,14 +21,14 @@ class App extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey.shade700,
         canvasColor: Colors.white,
         textTheme: TextTheme(
-          headlineLarge: TextStyle(color: Colors.white70),
-          titleLarge: TextStyle(color: Colors.white70),
-          titleMedium: TextStyle(color: Colors.white70),
-          titleSmall: TextStyle(color: Colors.white70),
-          labelLarge: TextStyle(color: Colors.white70),
-          bodySmall: TextStyle(color: Colors.white70),
-          bodyMedium: TextStyle(color: Colors.white70),
-          bodyLarge: TextStyle(color: Colors.white70),
+          headlineLarge: TextStyle(color: Colors.white),
+          titleLarge: TextStyle(color: Colors.white),
+          titleMedium: TextStyle(color: Colors.white),
+          titleSmall: TextStyle(color: Colors.white),
+          labelLarge: TextStyle(color: Colors.white),
+          bodySmall: TextStyle(color: Colors.white),
+          bodyMedium: TextStyle(color: Colors.white),
+          bodyLarge: TextStyle(color: Colors.white),
         ),
       ),
       darkTheme: ThemeData(
@@ -43,11 +43,11 @@ class App extends StatelessWidget {
           headlineSmall: TextStyle(color: Colors.white),
           titleLarge: TextStyle(color: Colors.white),
           titleMedium: TextStyle(color: Colors.white),
-          titleSmall: TextStyle(color: Colors.white70),
-          bodyLarge: TextStyle(color: Colors.white70),
-          labelLarge: TextStyle(color: Colors.white70),
-          bodySmall: TextStyle(color: Colors.white70),
-          bodyMedium: TextStyle(color: Colors.white70),
+          titleSmall: TextStyle(color: Colors.white),
+          bodyLarge: TextStyle(color: Colors.white),
+          labelLarge: TextStyle(color: Colors.white),
+          bodySmall: TextStyle(color: Colors.white),
+          bodyMedium: TextStyle(color: Colors.white),
         ),
         // ตั้งค่าความสวยงาม TextFormFild
         inputDecorationTheme: InputDecorationTheme(
@@ -73,7 +73,8 @@ class App extends StatelessWidget {
       },
       //initialRoute: '/',
       //routes: custom_route.Routes.getAll(),
-      home: HomePage(),
+      home: ExercisePage(),
+      //HomePage(),
     );
   }
 }

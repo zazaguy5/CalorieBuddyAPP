@@ -1,3 +1,4 @@
+import 'package:calories_buddy/contants/contants.dart';
 import 'package:flutter/material.dart';
 
 class CustomWidget {
@@ -89,6 +90,56 @@ class CustomWidget {
       ), title: Text(title, style: TextTheme.of(context).headlineSmall!.copyWith(color: Colors.white)),
       actions: actions,
       bottom: buttom
+    );
+  }
+}
+
+Widget toDayBox() {
+  return  Container(
+    margin: const EdgeInsets.only(left: 8),
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+    decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(12)),
+    child: const Text('วันนี้', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600))
+  );
+}
+
+class CustomAppbarUser extends StatelessWidget{
+  final String userName;
+  final String imageUrl;
+   
+  const CustomAppbarUser({required this.userName, required this.imageUrl, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 0, horizontal: 15),
+      width: double.infinity,
+      height: 80,
+      decoration: BoxDecoration(
+        color: cardBgColor,
+        borderRadius: BorderRadius.only(bottomLeft: Radius.circular(24), bottomRight: Radius.circular(24)),
+        boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 8, offset: Offset(0, 4))],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 300, 
+            child: Text(
+              'สวัสดีคุณ, $userName', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white)
+            ),
+          ),
+          ClipOval(
+            child: Image.network(
+              imageUrl,
+              width: 70,
+              height: 70,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
