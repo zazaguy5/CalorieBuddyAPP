@@ -38,7 +38,7 @@ class CounterTimer {
     final seconds = counterNotifier.value.inSeconds - 1;
     if (seconds < 0) {
       stopTimer();
-      counterNotifier.value = counterDuration;
+      //counterNotifier.value = counterDuration;
       isPlay = false;
       counterPlayer.play(AssetSource("alert.mp3"));
     } else {

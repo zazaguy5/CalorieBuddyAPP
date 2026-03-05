@@ -2,6 +2,7 @@ import 'package:calories_buddy/contants/contants.dart';
 import 'package:calories_buddy/contants/date_time_constants.dart';
 import 'package:calories_buddy/contants/muscle_icons.dart';
 import 'package:calories_buddy/models/exercise_data_model.dart';
+import 'package:calories_buddy/pages/exercise_page.dart';
 import 'package:calories_buddy/widgets/custom_widget.dart';
 import 'package:calories_buddy/widgets/exercise_table/detail_button.dart';
 import 'package:calories_buddy/widgets/exercise_table/restday_dialog.dart';
@@ -320,7 +321,9 @@ class ExerciseTablePage extends StatelessWidget {
                             const SizedBox(height: 6,),
 
                             GestureDetector(
-                              onTap: null,
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => ExercisePage(exercises: exerciseList[day]!)));
+                              },
                               child: Container(
                                 width: double.infinity,
                                 padding: EdgeInsets.symmetric(vertical: 8),

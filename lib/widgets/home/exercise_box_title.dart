@@ -15,14 +15,6 @@ class ExerciseBoxTitle extends StatelessWidget {
         Text(day, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
         if (isToday)
           toDayBox(),
-
-        if (isRestDay) 
-          Container(
-            margin: const EdgeInsets.only(left: 8),
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-            decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.2), borderRadius: BorderRadius.circular(12)),
-            child: const Text('วันพัก', style: TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600))
-          )
       ],
     );
   }

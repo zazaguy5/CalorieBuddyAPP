@@ -1,4 +1,5 @@
-import 'package:calories_buddy/pages/exercise_page.dart';
+import 'package:calories_buddy/contants/contants.dart';
+import 'package:calories_buddy/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -33,7 +34,7 @@ class App extends StatelessWidget {
       ),
       darkTheme: ThemeData(
         // ธีม Dark ที่คุณปรับแต่ง
-        appBarTheme: AppBarTheme(backgroundColor: Color(0xFF2C2C2E).withValues(alpha: 0.7)),
+        appBarTheme: AppBarTheme(backgroundColor: buttonColor1),
         // สี DropDown
         //canvasColor: greyOne,
         //scaffoldBackgroundColor: backgroundColorDarkTheme,
@@ -73,8 +74,7 @@ class App extends StatelessWidget {
       },
       //initialRoute: '/',
       //routes: custom_route.Routes.getAll(),
-      home: ExercisePage(),
-      //HomePage(),
+      home: HomePage(),
     );
   }
 }

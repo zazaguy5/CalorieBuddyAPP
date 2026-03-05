@@ -79,7 +79,7 @@ class CustomWidget {
   }
 
   AppBar appBarCustom(BuildContext context, String title, List<Widget>? actions, PreferredSize? buttom) {
-    return AppBar(centerTitle: true, leading: Padding(
+    return AppBar(centerTitle: true, backgroundColor: backgroundColor, leading: Padding(
       padding: const EdgeInsets.only(left: 12),
         child: IconButton(
           padding: EdgeInsets.zero,
