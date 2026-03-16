@@ -1,5 +1,6 @@
 import 'package:calories_buddy/contants/contants.dart';
 import 'package:calories_buddy/pages/home_page.dart';
+import 'package:calories_buddy/pages/test_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -74,7 +75,8 @@ class App extends StatelessWidget {
       },
       //initialRoute: '/',
       //routes: custom_route.Routes.getAll(),
-      home: HomePage(),
+      home: TestPage()
+      //HomePage(),
     );
   }
 }

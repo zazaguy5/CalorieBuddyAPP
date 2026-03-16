@@ -1,24 +1,26 @@
 import 'package:calories_buddy/contants/contants.dart';
 import 'package:calories_buddy/contants/muscle_icons.dart';
+import 'package:calories_buddy/database/services/exercise_db_manage.dart';
 import 'package:calories_buddy/models/exercise_data_model.dart';
 import 'package:calories_buddy/widgets/custom_widget.dart';
 import 'package:calories_buddy/widgets/floating_button.dart';
 import 'package:calories_buddy/util/counter_timer.dart';
 import 'package:flutter/material.dart';
-import 'package:calories_buddy/widgets/add_remove_widget.dart';
 
 class ExercisePage extends StatefulWidget {
+  final String day;
   final List<Exercise> exercises;
-  const ExercisePage({super.key, required this.exercises});
+  const ExercisePage({super.key, required this.day, required this.exercises});
 
   @override             
   // ignore: no_logic_in_create_state
-  State<ExercisePage> createState() => _ExercisePageState(exercises: exercises);
+  State<ExercisePage> createState() => _ExercisePageState(day: day, exercises: exercises);
 }
 
 class _ExercisePageState extends State<ExercisePage> {
+  final String day;
   final List<Exercise> exercises;
-  _ExercisePageState({required this.exercises});
+  _ExercisePageState({required this.day, required this.exercises});
 
   CustomWidget customWidget = CustomWidget();
   late CounterTimer counterTimer;
@@ -29,9 +31,18 @@ class _ExercisePageState extends State<ExercisePage> {
   @override
   void initState() {
     super.initState();
+    fetchExercise();
     counterTimer = CounterTimer(counterDuration: selectTime);
 
     counterTimer.startTimer();
+  }
+
+  Future<void> fetchExercise() async {
+    final dataMap = await ExerciseDbManage().getDayExercises(day);
+    setState(() {
+      exercises.clear();
+      exercises.addAll(dataMap.map((e) => Exercise.fromMap(e)).toList());
+    });
   }
 
   String durationToTxt(Duration duration) {
@@ -59,7 +70,19 @@ class _ExercisePageState extends State<ExercisePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customWidget.appBarCustom(context, 'ออกกำลังกาย', null, null),
+      appBar: AppBar(centerTitle: true, backgroundColor: backgroundColor, leading: Padding(
+        padding: const EdgeInsets.only(left: 12),
+          child: IconButton(
+            padding: EdgeInsets.zero,
+            iconSize: 20,
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+            onPressed: () {
+              counterTimer.dispose();
+              Navigator.pop(context);
+            },
+          ),
+        ), title: Text("ออกกำลังกาย", style: TextTheme.of(context).headlineSmall!.copyWith(color: Colors.white)),
+      ),
       drawer: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
