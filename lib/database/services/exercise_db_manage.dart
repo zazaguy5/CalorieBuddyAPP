@@ -17,6 +17,11 @@ class ExerciseDbManage {
     await db.delete('exercises');
   }
 
+  Future<void> deleteExerciseById(String id) async {
+    final db = await DatabaseHelper.instance.db;
+    await db.delete('exercises', where: 'id = ?', whereArgs: [id]);
+  }
+
   Future<int> insertExercise(Exercise exercise) async {
     final db = await DatabaseHelper.instance.db;
     return await db.insert('exercises', exercise.toMap());

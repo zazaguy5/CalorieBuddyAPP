@@ -75,8 +75,8 @@ class App extends StatelessWidget {
       },
       //initialRoute: '/',
       //routes: custom_route.Routes.getAll(),
-      home: TestPage()
-      //HomePage(),
+      home: HomePage(),
+      //TestPage()
     );
   }
 }

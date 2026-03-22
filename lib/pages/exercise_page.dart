@@ -1,8 +1,6 @@
 import 'package:calories_buddy/contants/contants.dart';
 import 'package:calories_buddy/contants/muscle_icons.dart';
-import 'package:calories_buddy/database/services/exercise_db_manage.dart';
 import 'package:calories_buddy/models/exercise_data_model.dart';
-import 'package:calories_buddy/widgets/custom_widget.dart';
 import 'package:calories_buddy/widgets/floating_button.dart';
 import 'package:calories_buddy/util/counter_timer.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +20,6 @@ class _ExercisePageState extends State<ExercisePage> {
   final List<Exercise> exercises;
   _ExercisePageState({required this.day, required this.exercises});
 
-  CustomWidget customWidget = CustomWidget();
   late CounterTimer counterTimer;
   Duration selectTime = Duration(seconds: 60);
   int index = 0; // index ท่าออกกกำลังกายปัจจุบัน
@@ -31,18 +28,9 @@ class _ExercisePageState extends State<ExercisePage> {
   @override
   void initState() {
     super.initState();
-    fetchExercise();
     counterTimer = CounterTimer(counterDuration: selectTime);
 
     counterTimer.startTimer();
-  }
-
-  Future<void> fetchExercise() async {
-    final dataMap = await ExerciseDbManage().getDayExercises(day);
-    setState(() {
-      exercises.clear();
-      exercises.addAll(dataMap.map((e) => Exercise.fromMap(e)).toList());
-    });
   }
 
   String durationToTxt(Duration duration) {
