@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class ExercisePage extends StatefulWidget {
   final String day;
-  final List<Exercise> exercises;
+  final List exercises;
   const ExercisePage({super.key, required this.day, required this.exercises});
 
   @override             
@@ -17,7 +17,7 @@ class ExercisePage extends StatefulWidget {
 
 class _ExercisePageState extends State<ExercisePage> {
   final String day;
-  final List<Exercise> exercises;
+  final List exercises;
   _ExercisePageState({required this.day, required this.exercises});
 
   late CounterTimer counterTimer;

@@ -1,5 +1,7 @@
 import 'package:calories_buddy/contants/contants.dart';
+import 'package:calories_buddy/contants/muscle_icons.dart';
 import 'package:calories_buddy/models/exercise_data_model.dart';
+import 'package:calories_buddy/pages/exercise_detail_page.dart';
 import 'package:calories_buddy/widgets/exercise_card_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -104,58 +106,100 @@ Widget toDayBox() {
 }
 
 Widget exerciseBox(BuildContext context, Exercise exercise) {
-    return Container(
+  return InkWell(
+    onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ExerciseDetailPage(exercise: exercise))),
+    child: Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(15),
+      height: 185,
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: cardBgColor,
+        color: const Color.fromRGBO(117, 117, 117, 1),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color:  Colors.white.withValues(alpha: 0.1), width: 1),
         boxShadow: [
           BoxShadow(color: Colors.black.withValues(alpha: 0.3), spreadRadius: 0, blurRadius: 8, offset: Offset(0, 2))
         ],
       ),
-      child: Stack(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          exerciseImage(exercise.image),
-
-          Positioned(
-            top: 0,
-            left: 80,
-            child: Text(exercise.name, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
-          ),
-
-          Positioned(
-            top: 30,
-            left: 80,
-            child: exerciseSetsReps(context, '${exercise.sets} เซ็ต x ${exercise.reps} ${exercise.name == 'Plank' ? 'วินาที' : 'ครั้ง'}'),
-          ),
-
-          Positioned(
-            right: 10,
-            bottom: 10,
-            child: exerciseMuscleGroup(context, exercise.muscle)
-          ),
-
-          Positioned(
-            top: 0,
-            right: 10,
-            child: Container(
-              height: 26,
-              width: 26,
-              decoration: BoxDecoration(
-                color: exercise.isCompleted ? Colors.green : Colors.transparent,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: exercise.isCompleted ? Colors.green : Colors.white54, width: 2),
-              ),
-              child: exercise.isCompleted ? const Icon(Icons.check, size: 18, color: Colors.white) : null
+          ClipRRect(
+            borderRadius: BorderRadius.circular(18),
+            child: Image.network(
+              exercise.image,
+              height: 130, 
+              width: 150,
+              fit: BoxFit.cover,
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return Container(
+                  height: 120,
+                  width: 150,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.grey[100]),
+                  child: Center(child: CircularProgressIndicator(value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null))
+                );
+              },
+              errorBuilder:(context, error, stackTrace) {
+                return Container(
+                  height: 120,
+                  width: 150,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.grey[100]),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.photo, size: 40, color: Colors.grey[400]),
+                      Text('No Image', style: TextTheme.of(context).bodySmall!.copyWith(color: Colors.grey[400], fontWeight: FontWeight.w500))
+                    ],
+                  ),
+                );
+              },
             ),
           ),
+          const SizedBox(width: 20),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(exercise.name, maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 5),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.40,
+                  child: Text(exercise.description, maxLines: 2, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 14, color: Colors.white))
+                ),
+                const SizedBox(height: 5),
+                exerciseSetsReps(context, '${exercise.sets} เซ็ต x ${exercise.reps} ${exercise.name == 'Plank' ? 'วินาที' : 'ครั้ง'}'),
+                const SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text('กล้ามเนื้อ${exercise.muscle}', style: TextTheme.of(context).bodyMedium!.copyWith(color: Colors.white70, fontWeight: FontWeight.w500)),
+                        const SizedBox(width: 4),
+                        Image.asset(muscleIcons[exercise.muscle]!, color:  Colors.white70, width: 20, height: 20, fit: BoxFit.cover),
+                      ],
+                    ),
+                    Container(
+                      height: 26,
+                      width: 26,
+                      decoration: BoxDecoration(
+                        color: exercise.isCompleted ? Colors.green : Colors.transparent,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: exercise.isCompleted ? Colors.green : Colors.white54, width: 2),
+                      ),
+                      child: exercise.isCompleted ? const Icon(Icons.check, size: 18, color: Colors.white) : null
+                    )
+                  ],
+                ),
+              ],
+            ),
+          )
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
 class CustomAppbarUser extends StatelessWidget{
   final String userName;
@@ -170,7 +214,7 @@ class CustomAppbarUser extends StatelessWidget{
       width: double.infinity,
       height: 80,
       decoration: BoxDecoration(
-        color: cardBgColor,
+        color: backgroundColor,
         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(24), bottomRight: Radius.circular(24)),
         boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.2), blurRadius: 8, offset: Offset(0, 4))],
       ),

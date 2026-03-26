@@ -1,6 +1,7 @@
 import 'package:calories_buddy/blocs/exercise_bloc/exercise_bloc.dart';
 import 'package:calories_buddy/blocs/exercise_bloc/exercise_strate.dart';
 import 'package:calories_buddy/contants/date_time_constants.dart';
+import 'package:calories_buddy/pages/exercise_table_page.dart';
 import 'package:calories_buddy/widgets/custom_widget.dart';
 import 'package:calories_buddy/widgets/home/exercise_box_title.dart';
 import 'package:calories_buddy/widgets/home/exercise_day_box.dart';
@@ -65,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.all(20.0),
                       child: Column(
                         children: [
-                          //titleExpand(context, 'ตารางออกกำลังกาย', ExerciseTablePage(exerciseWeek: exerciseWeek)),
+                          titleExpand(context, 'ตารางออกกำลังกาย', ExerciseTablePage(exerciseWeek: exerciseWeek)),
                           SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Padding(

@@ -1,4 +1,5 @@
 class Exercise {
+  final int id;
   final String name;
   final String description;
   final String muscle;
@@ -13,6 +14,7 @@ class Exercise {
   final String video;
 
   Exercise({
+    required this.id,
     required this.name,
     required this.description,
     required this.muscle,
@@ -28,12 +30,13 @@ class Exercise {
   });
 
   Map<String, dynamic> toMap() {
-    return {'name': name, 'description': description, 'muscle': muscle, 'sets': sets, 'reps': reps, 'day': day, 
+    return {'id': id, 'name': name, 'description': description, 'muscle': muscle, 'sets': sets, 'reps': reps, 'day': day, 
     'image': image, 'images': "", 'video': video};
   }
 
   factory Exercise.fromMap(Map<String, dynamic> data) {
     return Exercise(
+      id: data['id'],
       name: data['name'],
       description: data['description'],
       muscle: data['muscle'],

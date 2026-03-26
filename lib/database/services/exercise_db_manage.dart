@@ -12,12 +12,22 @@ class ExerciseDbManage {
     return await db.query('exercises', where: 'day = ?', whereArgs: [day]);
   }
 
+  Future<int> getExericseLastedId() async {
+    final db = await DatabaseHelper.instance.db;
+    List result = await db.query('exercises', orderBy: 'id DESC', limit: 1);
+    if (result.isNotEmpty) {
+      int lastId = result.first['id'];
+      print(lastId);
+    }
+    return result.isNotEmpty ? result.first['id'] : 1;
+  }
+
   Future<void> deleteAllExercises() async {
     final db = await DatabaseHelper.instance.db;
     await db.delete('exercises');
   }
 
-  Future<void> deleteExerciseById(String id) async {
+  Future<void> deleteExerciseById(int id) async {
     final db = await DatabaseHelper.instance.db;
     await db.delete('exercises', where: 'id = ?', whereArgs: [id]);
   }
@@ -30,6 +40,7 @@ class ExerciseDbManage {
   Future<void> initializeExercises() async {
     List<Exercise> exercises = [
       Exercise(
+        id: 1,
         name: 'Bench Press', 
         description: 'วิธีการ: การตั้งท่าที่มั่นคง วางเท้าให้ราบกับพื้น หลังแนบม้านั่ง จับบาร์กว้างกว่าไหล่เล็กน้อย และล็อคข้อมือให้ตรง', 
         muscle: 'อก',
@@ -41,6 +52,7 @@ class ExerciseDbManage {
         video: 'https://www.youtube.com/watch?v=AJFf4ATImPA'
       ),
       Exercise(
+        id: 2,
         name: 'Cable Fly',
         description: 'วิธีการ: กดด้ามจับสายเคเบิลให้มาอยู่ด้านหน้าหน้าอก โดยยืดแขนออกและให้ฝ่ามือหันเข้าหากัน จากนั้นเริ่มทำซ้ำโดยช้าๆ ให้ด้ามจับเคลื่อนไปทางเครื่องสายเคเบิลเป็นทิศทางโค้ง',
         muscle: 'อก',
@@ -52,6 +64,7 @@ class ExerciseDbManage {
         video: 'assets/videos/chest_press.mp4'
       ),
       Exercise(
+        id: 3,
         name: 'Pull Up',
         description: 'วิธีการ: ห้อยตัวบนบาร์ ดึงตัวขึ้นจนคางเกินบาร์',
         muscle: 'หลัง',
@@ -63,6 +76,7 @@ class ExerciseDbManage {
         video: 'assets/videos/pullup.mp4'
       ),
       Exercise(
+        id: 4,
         name: 'T Bar Row',
         description: 'วิธีการ: ยืนคร่อมบาร์ ก้มตัวลงเล็กน้อย และใช้มือทั้งสองข้างจับที่ปลายบาร์ จากนั้นยกน้ำหนักขึ้นโดยดึงบาร์เข้าหาลำตัว',
         muscle: 'หลัง',
@@ -74,101 +88,110 @@ class ExerciseDbManage {
         video: 'assets/videos/bent_row.mp4'
       ),
       Exercise(
+        id: 5,
         name: 'Bicep Curl',
         description: 'วิธีการ: ยกดัมเบลขึ้นลงด้วยกล้ามเนื้อต้นแขน',
         muscle: 'แขน',
         sets: 3,
         reps: 15,
         day: "พ.",
-        image: 'assets/images/exercises/bicep_curl.jpg',
+        image: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         images: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         video: 'assets/videos/bicep_curl.mp4'
       ),
       Exercise(
+        id: 6,
         name: 'Tricep Dip',
         description: 'วิธีการ: วางมือบนเก้าอี้ ลดตัวลงแล้วดันขึ้น',
         muscle: 'แขน',
         sets: 3,
         reps: 12,
         day: "พ.",
-        image: 'assets/images/exercises/tricep_dip.jpg',
+        image: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         images: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         video: 'assets/videos/tricep_dip.mp4'
       ),
       Exercise(
+        id: 7,
         name: 'Lateral Dumbbell Raise',
         description: 'วิธีการ: ยกดัมเบลขึ้นเหนือศีรษะ',
         muscle: 'ไหล่',
         sets: 3,
         reps: 12,
         day: "พฤ.",
-        image: 'assets/images/exercises/shoulder_press.jpg',
+        image: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         images: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         video: 'assets/videos/shoulder_press.mp4'
       ),
       Exercise(
+        id: 8,
         name: 'Squat',
         description: 'วิธีการ: ยืนตรง นั่งลงแล้วลุกขึ้น',
         muscle: 'ขา',
         sets: 3,
         reps: 20,
         day: "ศ.",
-        image: 'assets/images/exercises/squat.jpg',
+        image: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         images: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         video: 'assets/videos/squat.mp4'
       ),
       Exercise(
+        id: 9,
         name: 'Lunges',
         description: 'วิธีการ: ก้าวขาไปข้างหน้าแล้วลงลึก',
         muscle: 'ขา',
         sets: 3,
         reps: 15,
         day: "ศ.",
-        image: 'assets/images/exercises/lunges.jpg',
+        image: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         images: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         video: 'assets/videos/lunges.mp4'
       ),
       Exercise(
+        id: 10,
         name: 'Sit Up',
         description: 'วิธีการ: นอนหงาย งอเข่า ลุกขึ้นด้วยกล้ามเนื้อหน้าท้อง',
         muscle: 'หน้าท้อง',
         sets: 3,
         reps: 25,
         day: "ส.",
-        image: 'assets/images/exercises/situp.jpg',
+        image: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         images: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         video: 'assets/videos/situp.mp4'
       ),
       Exercise(
+        id: 11,
         name: 'Plank',
         description: 'วิธีการ: ค้ำตัวด้วยข้อศอกและปลายเท้า (วินาที)',
         muscle: 'หน้าท้อง',
         sets: 3,
         reps: 60,
         day: "ส.",
-        image: 'assets/images/exercises/plank.jpg',
+        image: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         images: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         video: 'assets/videos/plank.mp4'
       ),
       Exercise(
+        id: 12,
         name: 'Sit Up',
         description: 'วิธีการ: นอนหงาย งอเข่า ลุกขึ้นด้วยกล้ามเนื้อหน้าท้อง',
         muscle: 'หน้าท้อง',
         sets: 3,
         reps: 25,
         day: "อา.",
-        image: 'assets/images/exercises/situp.jpg',
+        image: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         images: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         video: 'assets/videos/situp.mp4'
       ),
       Exercise(
+        id: 13,
         name: 'Plank',
         description: 'วิธีการ: ค้ำตัวด้วยข้อศอกและปลายเท้า (วินาที)',
         muscle: 'หน้าท้อง',
         sets: 3,
         reps: 60,
         day: "อา.",
-        image: 'assets/images/exercises/plank.jpg',
+        image: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         images: 'https://liftmanual.com/wp-content/uploads/2023/04/barbell-reverse-grip-bench-press.jpg',
         video: 'assets/videos/plank.mp4'
       )

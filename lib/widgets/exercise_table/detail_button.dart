@@ -1,12 +1,11 @@
 import 'package:calories_buddy/contants/contants.dart';
-import 'package:calories_buddy/models/exercise_data_model.dart';
 import 'package:calories_buddy/widgets/exercise_table/detail_popup.dart';
 import 'package:flutter/material.dart';
 
 class ExerciseDetailButton extends StatelessWidget {
   final String day;
   final String exerciseStirng;
-  final List<Exercise> exerciseList;
+  final List exerciseList;
   const ExerciseDetailButton({super.key, required this.day, required this.exerciseStirng, required this.exerciseList});
 
   @override

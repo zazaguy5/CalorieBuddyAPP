@@ -17,13 +17,14 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
     try {
       List data = await ExerciseDbManage().getAllExercises();
       final exercises = data.map((e) => Exercise.fromMap(e)).toList();
+      //exercises.forEach((e) => print("id: ${e.id}"));
       emit(ExerciseLoaded(exercises));
     } catch (e) {
       emit(ExerciseLoadError(e.toString()));
     }
   }
 
-  Future<void> _onDeleteExercise(DeleteExercise event, Emitter<ExerciseState> emit, String id) async {
+  Future<void> _onDeleteExercise(DeleteExercise event, Emitter<ExerciseState> emit, int id) async {
     try {
       await ExerciseDbManage().deleteExerciseById(id);
     } catch (e) {

@@ -1,6 +1,5 @@
 import 'package:calories_buddy/contants/contants.dart';
 import 'package:calories_buddy/pages/home_page.dart';
-import 'package:calories_buddy/pages/test_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -11,14 +10,10 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       //scaffoldMessengerKey: custom_route.Routes.scaffoldMessengerState,
-      // ไม่ให้แสดง banner debug สีแดง
-      debugShowCheckedModeBanner: false,
-      // ปรับให้แอปรองรับภาษาไทย
-      locale: const Locale('th', 'TH'),
-      // ปรับธีม
-      //themeMode: themeState.themeApp? ThemeMode.dark : ThemeMode.light, // ให้แอปใช้ธีม Dark Mode
+      debugShowCheckedModeBanner: false, // ไม่ให้แสดง banner debug สีแดง
+      locale: const Locale('th', 'TH'), // ปรับให้แอปรองรับภาษาไทย
+      //themeMode: themeState.themeApp? ThemeMode.dark : ThemeMode.light, // ปรับธีมให้แอปใช้ธีม Dark Mode
       theme: ThemeData(
-        // ธีม Light ที่คุณปรับแต่ง
         //appBarTheme: AppBarTheme(backgroundColor: backgroundColorDarkTheme),
         scaffoldBackgroundColor: Colors.grey.shade700,
         canvasColor: Colors.white,
@@ -34,7 +29,6 @@ class App extends StatelessWidget {
         ),
       ),
       darkTheme: ThemeData(
-        // ธีม Dark ที่คุณปรับแต่ง
         appBarTheme: AppBarTheme(backgroundColor: buttonColor1),
         // สี DropDown
         //canvasColor: greyOne,
@@ -51,14 +45,13 @@ class App extends StatelessWidget {
           bodySmall: TextStyle(color: Colors.white),
           bodyMedium: TextStyle(color: Colors.white),
         ),
-        // ตั้งค่าความสวยงาม TextFormFild
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20),
             //borderSide: BorderSide(color: progressColorDarkTheme),
           ),
-        ),
+        ), // ตั้งค่าความสวยงาม TextFormFild
       ),
       supportedLocales: const [Locale('th', 'TH'), Locale('en', 'EN')],
       localizationsDelegates: const [
@@ -66,8 +59,7 @@ class App extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      // ปรับให้การเลือกเวลาเป็น format 24 ชม.
-      builder: (context, child) {
+      builder: (context, child) {   // ปรับให้การเลือกเวลาเป็น format 24 ชม.
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
           child: child!, 
@@ -76,7 +68,6 @@ class App extends StatelessWidget {
       //initialRoute: '/',
       //routes: custom_route.Routes.getAll(),
       home: HomePage(),
-      //TestPage()
     );
   }
 }
