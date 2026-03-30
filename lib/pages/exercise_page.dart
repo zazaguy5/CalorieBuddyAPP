@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:calories_buddy/contants/contants.dart';
 import 'package:calories_buddy/contants/muscle_icons.dart';
 import 'package:calories_buddy/models/exercise_data_model.dart';
@@ -106,7 +108,7 @@ class _ExercisePageState extends State<ExercisePage> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                Image.network(exercises[index].image, width: 400, height: 200, fit: BoxFit.cover),
+                Image.file(File(exercises[index].image), width: 400, height: 200, fit: BoxFit.cover),
                 const SizedBox(height: 10),
                 Text(exercises[index].name, style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w600)),
                 const SizedBox(height: 20),

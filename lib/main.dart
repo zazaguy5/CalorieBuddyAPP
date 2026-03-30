@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 void main() async {
   // เรียกฐานข้อมูลเพื่อสร้างและเพิ่มข้อมูลทดสอบ
   WidgetsFlutterBinding.ensureInitialized();
-  await DatabaseHelper.instance.initDb();
+  await DatabaseHelper.instance.initDb(); 
   //await ExerciseDbManage().deleteAllExercises();
   //await ExerciseDbManage().initializeExercises();
 

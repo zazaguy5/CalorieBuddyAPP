@@ -14,3 +14,7 @@ class TimerConstants {
   static const Duration CONNECT_TIMEOUT = Duration(seconds: 20);
   static const Duration RECEIVE_TIMEOUT = Duration(seconds: 10);
 }
+
+final daysOrdered = List.generate(7, (index) {
+    return DateTimeConstants.DAYS_CONSTANT[((DateTime.now().weekday - 1) + index) % 7];
+});

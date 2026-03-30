@@ -12,6 +12,11 @@ class ExerciseDbManage {
     return await db.query('exercises', where: 'day = ?', whereArgs: [day]);
   }
 
+  Future<List<Map<String, dynamic>>> getExericseById(int id) async {
+    final db = await DatabaseHelper.instance.db;
+    return await db.query('exercises', where: 'id = ?', whereArgs: [id]);
+  }
+
   Future<int> getExericseLastedId() async {
     final db = await DatabaseHelper.instance.db;
     List result = await db.query('exercises', orderBy: 'id DESC', limit: 1);
@@ -35,6 +40,11 @@ class ExerciseDbManage {
   Future<int> insertExercise(Exercise exercise) async {
     final db = await DatabaseHelper.instance.db;
     return await db.insert('exercises', exercise.toMap());
+  }
+
+  Future<int> editExercise(Exercise exercise) async {
+    final db = await DatabaseHelper.instance.db;
+    return await db.update('exercises', exercise.toMap(), where: 'id = ?', whereArgs: [exercise.id],);
   }
 
   Future<void> initializeExercises() async {

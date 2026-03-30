@@ -1,5 +1,5 @@
 import 'package:calories_buddy/blocs/exercise_bloc/exercise_bloc.dart';
-import 'package:calories_buddy/blocs/exercise_bloc/exercise_strate.dart';
+import 'package:calories_buddy/blocs/exercise_bloc/exercise_state.dart';
 import 'package:calories_buddy/contants/contants.dart';
 import 'package:calories_buddy/contants/date_time_constants.dart';
 import 'package:calories_buddy/contants/muscle_icons.dart';
@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ExerciseTablePage extends StatelessWidget {
-  final List<List<String>> exerciseWeek;
+  final Map<String, List> exerciseWeek;
   const ExerciseTablePage({super.key, required this.exerciseWeek});
 
   @override
@@ -39,15 +39,15 @@ class ExerciseTablePage extends StatelessWidget {
                 padding: const EdgeInsets.all(10),
                 child: Column(
                   children: [
-                    TextButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddEditExercisePage())), child: Text('เพิ่มท่า', style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold))),
+                    TextButton(onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddEditExercisePage(isAdd: true))), child: Text('เพิ่มท่า', style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold))),
                     const SizedBox(height: 10),
                     Expanded(
                       child: GridView.builder(
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: 0.75), 
                         itemCount: 7,
                         itemBuilder: (context, index) {
-                          bool isRestDay = exerciseWeek[index].contains('พัก');
-                          String day = DateTimeConstants.DAYS_CONSTANT[index];
+                          String day = daysOrdered[index];
+                          bool isRestDay = exerciseWeek[day]!.isEmpty;
                         
                           return Container(
                             padding: const EdgeInsets.all(12),
@@ -131,7 +131,7 @@ class ExerciseTablePage extends StatelessWidget {
                                                   spacing: 3,
                                                   runSpacing: 3,
                                                   alignment: WrapAlignment.center,
-                                                  children: exerciseWeek[index].take(3).map((muscle) {
+                                                  children: exerciseWeek[day]!.map((muscle) {
                                                     return Container(
                                                       width: 40,
                                                       height: 40,
@@ -143,7 +143,7 @@ class ExerciseTablePage extends StatelessWidget {
                                                 ),
                                               ),
                                               const SizedBox(height: 2,),
-                                              Text(exerciseWeek[index].take(3).join(' • '), maxLines: 1,overflow: TextOverflow.ellipsis, style: TextTheme.of(context).bodyMedium!.copyWith(color: greyOne, fontWeight: FontWeight.w500))
+                                              Text(exerciseWeek[day]!.join(' • '), maxLines: 1,overflow: TextOverflow.ellipsis, style: TextTheme.of(context).bodyMedium!.copyWith(color: greyOne, fontWeight: FontWeight.w500))
                                             ],
                                           ),
                                         ),
@@ -165,7 +165,7 @@ class ExerciseTablePage extends StatelessWidget {
                                       context: context, 
                                       isScrollControlled: true,
                                       backgroundColor: Colors.transparent,
-                                      builder: (context) => ExerciseDetailButton(day: "วัน $day", exerciseStirng: exerciseWeek[index].join(' • '), exerciseList: exercises[day]!),
+                                      builder: (context) => ExerciseDetailButton(day: "วัน $day", exerciseStirng: exerciseWeek[day]!.join(' • '), exerciseList: exercises[day]!),
                                     );
                                   },
                                   child: Container(

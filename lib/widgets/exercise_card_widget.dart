@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:calories_buddy/contants/contants.dart';
 import 'package:calories_buddy/contants/muscle_icons.dart';
 import 'package:flutter/material.dart';
@@ -15,19 +17,9 @@ Widget exerciseImage(String image) {
     ),
     child: ClipRRect(
       borderRadius: BorderRadius.circular(10),
-      child: Image.network(
-        image,
+      child: Image.file(
+        File(image),
         fit: BoxFit.cover,
-        loadingBuilder: (context, child, loadingProgress) {
-          if (loadingProgress == null) return child;
-
-          return Container(
-            height: 120,
-            width: 150,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.grey[100]),
-            child: Center(child: CircularProgressIndicator(value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null))
-          );
-        },
         errorBuilder:(context, error, stackTrace) {
           return Container(
             height: 120,

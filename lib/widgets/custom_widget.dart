@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:calories_buddy/contants/contants.dart';
 import 'package:calories_buddy/contants/muscle_icons.dart';
 import 'package:calories_buddy/models/exercise_data_model.dart';
@@ -126,20 +128,11 @@ Widget exerciseBox(BuildContext context, Exercise exercise) {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(18),
-            child: Image.network(
-              exercise.image,
+            child: Image.file(
+              File(exercise.image),
               height: 130, 
               width: 150,
               fit: BoxFit.cover,
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Container(
-                  height: 120,
-                  width: 150,
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.grey[100]),
-                  child: Center(child: CircularProgressIndicator(value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null))
-                );
-              },
               errorBuilder:(context, error, stackTrace) {
                 return Container(
                   height: 120,
@@ -202,10 +195,10 @@ Widget exerciseBox(BuildContext context, Exercise exercise) {
 }
 
 class CustomAppbarUser extends StatelessWidget{
-  final String userName;
-  final String imageUrl;
+  final String? userName;
+  final String? imageUrl;
    
-  const CustomAppbarUser({required this.userName, required this.imageUrl, super.key});
+  const CustomAppbarUser({this.userName, this.imageUrl, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -222,20 +215,43 @@ class CustomAppbarUser extends StatelessWidget{
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 300, 
-            child: Text(
-              'สวัสดีคุณ, $userName', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white)
-            ),
-          ),
-          ClipOval(
-            child: Image.network(
-              imageUrl,
-              width: 70,
-              height: 70,
-              fit: BoxFit.cover,
-            ),
-          ),
+          userName != null? 
+            SizedBox(width: 300, child: Text('สวัสดีคุณ, $userName', maxLines: 1, overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white))) 
+              : Container(width: 180, height: 22, decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(8),
+            )),
+
+            imageUrl != null? ClipOval(child: Image.network(imageUrl!, width: 70,
+                height: 70,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    height: 120,
+                    width: 150,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.grey[100]),
+                    child: Center(child: CircularProgressIndicator(value: loadingProgress.expectedTotalBytes != null ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes! : null))
+                  );
+                },
+                errorBuilder:(context, error, stackTrace) {
+                  return Container(
+                    height: 120,
+                    width: 150,
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(8), color: Colors.grey[100]),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.photo, size: 40, color: Colors.grey[400]),
+                        Text('No Image', style: TextTheme.of(context).bodySmall!.copyWith(color: Colors.grey[400], fontWeight: FontWeight.w500))
+                      ],
+                    ),
+                  );
+                },))
+        : Container(width: 70, height: 70, decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.15),
+            shape: BoxShape.circle,
+          )),
         ],
       ),
     );

@@ -2,7 +2,7 @@
 สมองที่รับ Event แล้วตัดสินใจว่าจะ emit State อะไร
 */
 import 'package:calories_buddy/blocs/exercise_bloc/exercise_event.dart';
-import 'package:calories_buddy/blocs/exercise_bloc/exercise_strate.dart';
+import 'package:calories_buddy/blocs/exercise_bloc/exercise_state.dart';
 import 'package:calories_buddy/database/services/exercise_db_manage.dart';
 import 'package:calories_buddy/models/exercise_data_model.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
   ExerciseBloc() : super(ExerciseInitial()) {
     on<FetchExercises>(_onFetchExercises);
+    on<FetchExerciseById>(_getExerciseById);
   }
 
   Future<void> _onFetchExercises(FetchExercises event, Emitter<ExerciseState> emit) async {
@@ -24,9 +25,13 @@ class ExerciseBloc extends Bloc<ExerciseEvent, ExerciseState> {
     }
   }
 
-  Future<void> _onDeleteExercise(DeleteExercise event, Emitter<ExerciseState> emit, int id) async {
+  Future<void> _getExerciseById(FetchExerciseById event, Emitter<ExerciseState> emit) async {
+    emit(ExerciseLoading());
     try {
-      await ExerciseDbManage().deleteExerciseById(id);
+      final data = await ExerciseDbManage().getExericseById(event.id);
+      final exercise = Exercise.fromMap(data.first);
+      print("id: ${exercise.id}");
+      emit(ExerciseDetailLoaded([exercise]));
     } catch (e) {
       emit(ExerciseLoadError(e.toString()));
     }

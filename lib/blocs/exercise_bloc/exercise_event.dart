@@ -5,7 +5,7 @@ Bloc Event คือ เหตุการณ์ต่างๆ ของแอ�
 abstract class ExerciseEvent {}
 
 class FetchExercises extends ExerciseEvent {}
-class DeleteExercise extends ExerciseEvent {
+class FetchExerciseById extends ExerciseEvent {
   final int id;
-  DeleteExercise(this.id);
+  FetchExerciseById(this.id);
 }

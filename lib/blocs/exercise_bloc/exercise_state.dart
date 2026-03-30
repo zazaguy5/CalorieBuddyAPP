@@ -11,6 +11,11 @@ class ExerciseLoaded extends ExerciseState {  // State เมื่อโหล�
   ExerciseLoaded(this.exercises);
 }
 
+class ExerciseDetailLoaded extends ExerciseState {
+  final List exercise;
+  ExerciseDetailLoaded(this.exercise);
+}
+
 class ExerciseLoadError extends ExerciseState { // State เมื่อโหลด Exercise แล้วเกิด Error
   final String message;
   ExerciseLoadError(this.message);
